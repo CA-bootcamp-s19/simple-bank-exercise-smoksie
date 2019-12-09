@@ -69,8 +69,9 @@ contract SimpleBank {
     function enroll() public returns (bool) {
         balances[msg.sender] = 0;
         enrolled[msg.sender] = true;
-
         emit LogEnrolled(msg.sender);
+
+        return enrolled[msg.sender];
     }
 
     /// @notice Deposit ether into bank
@@ -83,7 +84,7 @@ contract SimpleBank {
         /* Add the amount to the user's balance, call the event associated with a deposit,
           then return the balance of the user */
         // require that user is enrolled
-        require(enrolled[msg.sender] == true, "You would need to enroll client first.");
+        require(enrolled[msg.sender] == true, "Client needs to be enrolled first.");
         balances[msg.sender] += msg.value;
         emit LogDepositMade(msg.sender, msg.value);
 
